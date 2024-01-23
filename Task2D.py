@@ -52,3 +52,4 @@ if __name__ == "__main__":
     run()
 print("ruolin")
 print("hi")
+print("lol")
