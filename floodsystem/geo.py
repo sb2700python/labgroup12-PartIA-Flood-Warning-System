@@ -5,10 +5,16 @@
 geographical data.
 
 """
-import sys
-import os
 
-sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 
 
 from .utils import sorted_by_key
+from haversine import haversine, Unit
+
+def stations_by_distance(stations, p):
+    station_and_distance = [0] * len(stations)
+    i = 0
+    for station in stations:
+        station_and_distance[i] = (station, haversine(station.coord, p))
+        i += 1
+    return sorted_by_key(station_and_distance, 1)
