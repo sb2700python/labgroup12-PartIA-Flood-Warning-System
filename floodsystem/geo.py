@@ -42,3 +42,22 @@ def stations_by_river(stations):
         elif station.river in rivers:
             rivers[station.river].append(station.name)
     return rivers
+
+def rivers_by_station_number(stations,N):
+    river_count = {}
+    '''count how many monitoring stations each river has '''
+    for station in stations:
+        if station.river not in river_count:
+            river_count[station.river] = 1
+        else:
+            river_count[station.river] += 1
+    
+    '''This turns the dict into a list of tuples, and sorts them by the number of stations but in reverse order'''
+
+    sorted_rivers = sorted(river_count.items(), key=lambda x: x[1], reverse=True)
+
+    Nth_entry = sorted_rivers[N-1][1] if N <= len(sorted_rivers) else 0
+
+    result = [(river, count) for river, count in sorted_rivers if count >= Nth_entry]
+
+    return result
