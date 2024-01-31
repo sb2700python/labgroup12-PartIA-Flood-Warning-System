@@ -44,6 +44,9 @@ def stations_by_river(stations):
     return rivers
 
 def rivers_by_station_number(stations,N):
+    if type(N) != int:
+        raise TypeError('Please input a valid integer')
+
     river_count = {}
     '''count how many monitoring stations each river has '''
     for station in stations:

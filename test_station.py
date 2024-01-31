@@ -27,7 +27,26 @@ def test_create_monitoring_station():
     assert s.town == town
 
 def test_typical_range_consistent():
-    MonitoringStation.typical_range_consistent
+    result1 = MonitoringStation.typical_range_consistent(100,10)
+    result2 = MonitoringStation.typical_range_consistent()
+    result3 = MonitoringStation.typical_range_consistent(10,100)
+    assert result1 is False
+    assert result2 is False
+    assert result3 is True
 
 def test_inconsistent_typical_range_stations():
-    
+    station1 = MonitoringStation(station_id='1', measure_id='1', label='Station1', coord=(1.23, 4.56), typical_range=(100, 10), river='x', town='y')
+    stations = [station1]
+    result1 = MonitoringStation.inconsistent_typical_range_stations(stations)
+    assert result1 == ['Station1']
+
+    station2 = MonitoringStation(station_id='2', measure_id='2', label='Station2', coord=(1.23, 4.56), typical_range=None, river='x', town='y')
+    stations = [station2]
+    result2 = MonitoringStation.inconsistent_typical_range_stations(stations)
+    assert result1 == ['Station2']
+
+    station3 = MonitoringStation(station_id='3', measure_id='3', label='Station3', coord=(1.23, 4.56), typical_range=(10, 100), river='x', town='y')
+    stations = [station3]
+    result1 = MonitoringStation.inconsistent_typical_range_stations(stations)
+    assert result1 == []
+

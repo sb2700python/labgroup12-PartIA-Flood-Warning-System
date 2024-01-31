@@ -5,6 +5,7 @@ from floodsystem.geo import rivers_with_station
 from floodsystem.geo import stations_by_river
 import random
 from haversine import haversine, Unit
+from floodsystem.geo import rivers_by_station_number
 
 
 def test_station_by_distance():
@@ -41,8 +42,18 @@ def test_stations_by_river():
     for element in stations:
         assert element.name in x[element.river]
     
-    
-  #ADD A TEST FOR 1E HERE  
-def test_rivers_by_station_number():
-    
-def 
+      
+def test_rivers_by_station_number(): 
+    stations = build_station_list()
+
+    try:
+        rivers_by_station_number(stations,N =9.0)
+        rivers_by_station_number(stations,N ='9')
+
+    except TypeError as e:
+        assert str(e) == 'Please input a valid integer'
+
+    else:
+        assert False, 'Expected TypeError, but no exception was raised'
+
+
