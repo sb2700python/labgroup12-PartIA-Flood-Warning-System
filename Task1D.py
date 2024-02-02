@@ -14,6 +14,7 @@ def run():
     rivers2=stations_by_river(stations)
     print(sorted(rivers2["River Aire"]))
     print(sorted(rivers2["River Cam"]))
+    print(sorted(rivers2["River Thames"]))
     
 if __name__ == "__main__":
     run()
