@@ -20,6 +20,7 @@ def stations_by_distance(stations, p):
     return sorted_by_key(station_and_distance, 1)
 
 def stations_within_radius(stations, centre, r):
+    '''returns a list of stations within a given radius'''
     stations_distance=stations_by_distance(stations,centre)
     stations_in=[]
     for elements in stations_distance:
@@ -44,18 +45,19 @@ def stations_by_river(stations):
     return rivers
 
 def rivers_by_station_number(stations,N):
+    """ determines the N rivers with the greatest number of monitoring stations"""
     if type(N) != int:
         raise TypeError('Please input a valid integer')
 
     river_count = {}
-    '''count how many monitoring stations each river has '''
+    #count how many monitoring stations each river has
     for station in stations:
         if station.river not in river_count:
             river_count[station.river] = 1
         else:
             river_count[station.river] += 1
     
-    '''This turns the dict into a list of tuples, and sorts them by the number of stations but in reverse order'''
+    #This turns the dict into a list of tuples, and sorts them by the number of stations but in reverse order
 
     sorted_rivers = sorted(river_count.items(), key=lambda x: x[1], reverse=True)
 
