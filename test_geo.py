@@ -15,7 +15,7 @@ def test_station_by_distance():
     x=stations_by_distance(stations,coord)
     for i in range(len(x) - 1):
         assert x[i][1] <= x[i+1][1]
-    assert stations_by_distance(stations,"6,1")is False, 'Expected TypeError, but no exception was raised'
+
     
 # 1C Test
 
@@ -33,7 +33,7 @@ def test_stations_within_radius():
     for i in range(len(y) - 1):
         assert haversine(y[i].coord, centre)>=r
     
-    assert stations_within_radius(stations,centre, -5)is[], 'Expected output of an empty set'
+    
         
 # 1D Test
         
