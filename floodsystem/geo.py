@@ -12,6 +12,7 @@ from .utils import sorted_by_key
 from haversine import haversine, Unit
 
 def stations_by_distance(stations, p):
+    'Given a list of Monitoringstation class, return a list of turples of stations and distance, sorted by distance'
     station_and_distance = [0] * len(stations)
     i = 0
     for station in stations:
@@ -29,6 +30,7 @@ def stations_within_radius(stations, centre, r):
     return stations_in
 
 def rivers_with_station(stations):
+    'Return the rivers with the given stations'
     rivers=set([])
     for station in stations:
         rivers.add(station.river)
@@ -36,6 +38,7 @@ def rivers_with_station(stations):
 
 
 def stations_by_river(stations):
+    'Return a library with rivers as keys to stations'
     rivers={}
     for station in stations:
         if station.river not in rivers:
