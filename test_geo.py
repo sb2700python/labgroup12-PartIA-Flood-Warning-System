@@ -7,7 +7,7 @@ import random
 from haversine import haversine, Unit
 from floodsystem.geo import rivers_by_station_number
 
-
+# 1B Test
 def test_station_by_distance():
     stations = build_station_list()
 
@@ -15,6 +15,8 @@ def test_station_by_distance():
     x=stations_by_distance(stations,coord)
     for i in range(len(x) - 1):
         assert x[i][1] <= x[i+1][1]
+        
+# 1C Test
 
 def test_stations_within_radius():
     stations = build_station_list()
@@ -29,6 +31,8 @@ def test_stations_within_radius():
     for i in range(len(y) - 1):
         assert haversine(y[i].coord, centre)>=r
         
+# 1D Test
+        
 def test_river_with_station():
     stations = build_station_list()
 
@@ -42,7 +46,8 @@ def test_stations_by_river():
     for element in stations:
         assert element.name in x[element.river]
     
-      
+
+# 1E Test   
 def test_rivers_by_station_number(): 
     stations = build_station_list()
 
