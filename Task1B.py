@@ -15,8 +15,8 @@ def run():
         closest_data.append((closest10[i][0].name,closest10[i][0].town,closest10[i][1]))
         furthest_data.append((furthest10[i][0].name,furthest10[i][0].town,furthest10[i][1]))
 
-        print(closest_data)
-        print(furthest_data)
+    print(closest_data)
+    print(furthest_data)
 
 if __name__ == "__main__":
     run()
