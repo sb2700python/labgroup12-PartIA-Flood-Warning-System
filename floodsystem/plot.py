@@ -15,13 +15,15 @@ def plot_water_levels(station, dates, levels):
     plt.plot(dates, levels, label='Water Level')
 
     # Add lines for typical low and high levels
-    low_level = station.typical_range[0] if hasattr(station, 'typical_range') else None
-    high_level = station.typical_range[1] if hasattr(station, 'typical_range') else None
+    if hasattr(station, 'typical_range') and station.typical_range is not None:
+        low_level, high_level = station.typical_range
 
-    if low_level is not None:
-        plt.axhline(y=low_level, color='r', linestyle='--', label='Typical Low Level')
-    if high_level is not None:
-        plt.axhline(y=high_level, color='g', linestyle='--', label='Typical High Level')
+        if low_level is not None:
+            plt.axhline(y=low_level, color='r', linestyle='--', label='Typical Low Level')
+        if high_level is not None:
+            plt.axhline(y=high_level, color='g', linestyle='--', label='Typical High Level')
+
+
 
     # Labeling and title
     plt.xlabel('Time')
@@ -50,13 +52,14 @@ def plot_water_level_with_fit(station, dates, levels, p):
     plt.plot(dates, levels, label='Water Level')
 
     # Add lines for typical low and high levels
-    low_level = station.typical_range[0] if hasattr(station, 'typical_range') else None
-    high_level = station.typical_range[1] if hasattr(station, 'typical_range') else None
+    # Add lines for typical low and high levels
+    if hasattr(station, 'typical_range') and station.typical_range is not None:
+        low_level, high_level = station.typical_range
 
-    if low_level is not None:
-        plt.axhline(y=low_level, color='r', linestyle='--', label='Typical Low Level')
-    if high_level is not None:
-        plt.axhline(y=high_level, color='g', linestyle='--', label='Typical High Level')
+        if low_level is not None:
+            plt.axhline(y=low_level, color='r', linestyle='--', label='Typical Low Level')
+        if high_level is not None:
+            plt.axhline(y=high_level, color='g', linestyle='--', label='Typical High Level')
 
     # Labeling and title
     plt.xlabel('Time')
