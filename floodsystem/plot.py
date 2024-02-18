@@ -1,6 +1,9 @@
 # plot/plot_module.py
 
+import matplotlib
 import matplotlib.pyplot as plt
+from floodsystem.analysis import polyfit
+import numpy as np
 
 def plot_water_levels(station, dates, levels):
     """
@@ -32,10 +35,17 @@ def plot_water_levels(station, dates, levels):
 
 def plot_water_level_with_fit(station, dates, levels, p):
     """
-    Display a plot of water level data against time for a station.
+    Display a plot of water level data against time for a station with curve fitting.
 
     """
-
+    # Curve fitting
+    poly, d0= polyfit(dates,levels,p)
+    
+    # Plot curve produced
+    x=matplotlib.dates.date2num(dates)
+    x1 = np.linspace(x[0], x[-1], 300)
+    plt.plot(x1, poly(x1 - d0), label='Curve Fitting',linestyle='--')
+    
     # Plot the water levels against time
     plt.plot(dates, levels, label='Water Level')
 
