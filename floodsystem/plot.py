@@ -43,8 +43,8 @@ def plot_water_level_with_fit(station, dates, levels, p):
     
     # Plot curve produced
     x=matplotlib.dates.date2num(dates)
-    x1 = np.linspace(x[0], x[-1], 300)
-    plt.plot(x1, poly(x1 - d0), label='Curve Fitting',linestyle='--')
+
+    plt.plot(dates, poly(x - d0), label='Curve Fitting',linestyle='--')
     
     # Plot the water levels against time
     plt.plot(dates, levels, label='Water Level')
