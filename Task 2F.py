@@ -2,7 +2,8 @@ from floodsystem.stationdata import build_station_list, update_water_levels
 import datetime
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.plot import plot_water_levels
-
+from floodsystem.analysis import polyfit
+import matplotlib
 
 def run():
     # build station list with updated water level
@@ -14,13 +15,13 @@ def run():
     first_five=sorted_stations_desc[:5]
     
     # plot water level against time
-    dt=10
+    dt=2
     for element in first_five:
         dates, levels = fetch_measure_levels(element.measure_id, dt=datetime.timedelta(days=dt))
-        plot_water_levels(element,dates,levels)
+        print(polyfit(matplotlib.dates.date2num(dates),levels,4))
 
 
 
 if __name__ == "__main__":
-    print("*** Task 2E: CUED Part IA Flood Warning System ***")
+    print("*** Task 2F: CUED Part IA Flood Warning System ***")
     run()
