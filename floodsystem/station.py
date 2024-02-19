@@ -28,7 +28,7 @@ class MonitoringStation:
         self.river = river
         self.town = town
 
-        self.latest_level = None
+        self.latest_level = None #new attribute
 
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
@@ -38,6 +38,7 @@ class MonitoringStation:
         d += "   town:          {}\n".format(self.town)
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
+        d += "   latest level:  {}".format(self.latest_level)
         return d
 
     def typical_range_consistent(self):
@@ -51,7 +52,15 @@ class MonitoringStation:
         else:
             return True
         
-
+    def relative_water_level(self):
+        if self.typical_range_consistent() == False or self.latest_level == None:
+            return None
+        else:
+            range_low = self.typical_range[0]
+            range_high = self.typical_range[1]
+            ratio = (self.latest_level - range_low)/(range_high - range_low)
+            return ratio
+    
 
 def inconsistent_typical_range_stations(stations):
     '''if the typical range is not consistent, the name of the station is added to a list 
@@ -66,6 +75,10 @@ def inconsistent_typical_range_stations(stations):
 
     return sorted(inconsistent_stations)
 
-    
+def call_relative_water_level(station):
+    return station.relative_water_level()
+
+def call_typical_range_consistent(station):
+    return station.typical_range_consistent()
 
             
