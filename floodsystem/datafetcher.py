@@ -144,3 +144,15 @@ def fetch_measure_levels(measure_id, dt):
         levels.append(measure['value'])
 
     return dates, levels
+
+def fetch_measure_levels_safe(station_id, dt=None):
+    try:
+        dates, levels = fetch_measure_levels(station_id, dt)
+        return dates, levels
+    except KeyError as e:
+        print(f"Warning: Error fetching measure levels for station {station_id}: {e}")
+        return [], []  # Return empty lists in case of an error
+    except Exception as e:
+        print(f"Error fetching measure levels for station {station_id}: {e}")
+        raise  # Re-raise the exception if it's not a KeyError
+

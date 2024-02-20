@@ -51,7 +51,7 @@ def plot_water_level_with_fit(station, dates, levels, p):
     # Plot the water levels against time
     plt.plot(dates, levels, label='Water Level')
 
-    # Add lines for typical low and high levels
+
     # Add lines for typical low and high levels
     if hasattr(station, 'typical_range') and station.typical_range is not None:
         low_level, high_level = station.typical_range
