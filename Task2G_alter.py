@@ -60,8 +60,8 @@ def run():
                             risk="low"
                             low.add(element.name)
                         
-                        # Generate a dict where the towns are keys to risk_key and risk
-                        if element.town not in towns:
+                        # Check the station has town, and generate a dict where the towns are keys to risk_key and risk
+                        if hasattr(element, 'town') and element.town is not None and element.town not in towns:
                             towns[element.town]=(risk_key,risk)
                         elif risk_key>towns[element.town][0]:
                             towns[element.town]=(risk_key,risk)
