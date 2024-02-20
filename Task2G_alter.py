@@ -18,24 +18,34 @@ def run():
     dt2=3
     p=4
     towns={}
+    # Relative water level >2.0 for severe
     severe=set()
+    # 1.5-2.0 for high
     high=set()
+    # 1.0-1.5 for moderate
     moderate=set()
+    # <1.0 for low
     low=set()
     
 
           
     for element in stations:
+        
+        # Safe fetch to avoid value error caused by corrupted data
         dates, levels = fetch_measure_levels_safe(element.measure_id, dt=datetime.timedelta(days=dt1))
         
         # Check if dates is a list of datetime.date
         if all(isinstance(date, datetime.date) for date in dates):
         # Check if levels is a list of float
             if all(isinstance(level, float) for level in levels):
+                # Check level and dates have equal length and are not empty
                 if len(dates)==len(levels)!=0:
+                    # Check the station has typical range and latest level
                     if hasattr(element, 'typical_range') and element.typical_range is not None and hasattr(element, 'latest_level') and element.latest_level is not None:                      
+                        # predict the highest relative water level in next dt2 days
                         predicted_relative_level=predict_highest_water_level(dates,levels,p,dt2)/element.typical_range[1]
                         latest_relative_level=element.latest_level/element.typical_range[1]
+                        # Use the higher one of current level and predicted level to access the risk
                         risk_key=max(predicted_relative_level,latest_relative_level)
                         if risk_key>=2.0:
                             risk="severe"
@@ -50,11 +60,13 @@ def run():
                             risk="low"
                             low.add(element.name)
                         
+                        # Generate a dict where the towns are keys to risk_key and risk
                         if element.town not in towns:
                             towns[element.town]=(risk_key,risk)
                         elif risk_key>towns[element.town][0]:
                             towns[element.town]=(risk_key,risk)
-                        
+    
+    # Sort the dict based on risk_key, in descending order                    
     sorted_towns = dict(sorted(towns.items(), key=lambda x: x[1][0], reverse=True))
     top_10_risk_towns = dict(list(sorted_towns.items())[:10])
     print(top_10_risk_towns)
