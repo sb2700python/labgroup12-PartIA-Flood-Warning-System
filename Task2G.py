@@ -31,14 +31,14 @@ def run():
           
     for element in stations:
         
-        # Safe fetch to avoid value error caused by corrupted data
+        # Safe fetch to avoid value error caused by corrupted data, return two empty lists which would be passed later
         dates, levels = fetch_measure_levels_safe(element.measure_id, dt=datetime.timedelta(days=dt1))
         
         # Check if dates is a list of datetime.date
         if all(isinstance(date, datetime.date) for date in dates):
         # Check if levels is a list of float
             if all(isinstance(level, float) for level in levels):
-                # Check level and dates have equal length and are not empty
+                # Check level and dates have equal length and are not empty, also pass stations with corrupted dates and/or level data
                 if len(dates)==len(levels)!=0:
                     # Check the station has typical range and latest level
                     if hasattr(element, 'typical_range') and element.typical_range is not None and hasattr(element, 'latest_level') and element.latest_level is not None:                      
@@ -47,6 +47,10 @@ def run():
                         latest_relative_level=element.latest_level/element.typical_range[1]
                         # Use the higher one of current level and predicted level to access the risk
                         risk_key=max(predicted_relative_level,latest_relative_level)
+                        if predicted_relative_level>latest_relative_level:
+                            status="predicted"
+                        else:
+                            status="current"
                         if risk_key>=2.0:
                             risk="severe"
                             severe.add(element.name)
@@ -60,16 +64,17 @@ def run():
                             risk="low"
                             low.add(element.name)
                         
-                        # Check the station has town, and generate a dict where the towns are keys to risk_key and risk
+                        # Check the station has town, and generate a dict where the towns are keys to risk_key, risk and status
                         if hasattr(element, 'town') and element.town is not None and element.town not in towns:
-                            towns[element.town]=(risk_key,risk)
+                            towns[element.town]=(risk_key,risk,status)
                         elif risk_key>towns[element.town][0]:
-                            towns[element.town]=(risk_key,risk)
+                            towns[element.town]=(risk_key,risk,status)
     
     # Sort the dict based on risk_key, in descending order                    
     sorted_towns = dict(sorted(towns.items(), key=lambda x: x[1][0], reverse=True))
-    top_10_risk_towns = dict(list(sorted_towns.items())[:10])
-    print(top_10_risk_towns)
+    n=10
+    top_n_risk_towns = dict(list(sorted_towns.items())[:n])
+    print(top_n_risk_towns)
     print(severe)                        
                         
                         
