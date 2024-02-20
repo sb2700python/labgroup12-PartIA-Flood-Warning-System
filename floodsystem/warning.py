@@ -5,7 +5,7 @@ import datetime
 from floodsystem.datafetcher import fetch_measure_levels, fetch_measure_levels_safe
 from floodsystem.plot import plot_water_level_with_fit
 from floodsystem.analysis import polyfit, predict_highest_water_level
-from floodsystem.flood import stations_level_over_threshold
+
 
 
 def flood_warning(stations,dt1=10, dt2=3, p=4):

@@ -32,6 +32,6 @@ def test_plot_water_level_with_fit():
     dates = [datetime.datetime(2024, 2, 1) + datetime.timedelta(days=i) for i in range(10)]
     levels = [15, 18, 20, 25, 28, 30, 22, 19, 21, 24]
     try:
-        plot_water_level_with_fit(station, dates, levels)
+        plot_water_level_with_fit(station, dates, levels,4)
     except Exception as e:
         assert False, f"Exception occurred: {e}"   
