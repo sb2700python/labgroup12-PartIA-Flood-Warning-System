@@ -5,6 +5,8 @@
 
 from floodsystem.station import MonitoringStation
 from floodsystem.station import inconsistent_typical_range_stations
+from floodsystem.station import call_relative_water_level
+from floodsystem.station import call_typical_range_consistent
 
 
 def test_create_monitoring_station():
@@ -52,3 +54,13 @@ def test_inconsistent_typical_range_stations():
     result3 = inconsistent_typical_range_stations(stations)
     assert result3 == []
 
+def test_relative_water_level():
+    station1 = MonitoringStation(station_id='3', measure_id='3', label='Station3', coord=(1.23, 4.56), typical_range=(0, 100), river='x', town='y')
+    station1.latest_level = 200
+    result1 = call_relative_water_level(station1)
+    assert result1 == 2
+
+    station2 = MonitoringStation(station_id='3', measure_id='3', label='Station3', coord=(1.23, 4.56), typical_range=(0, 100), river='x', town='y')
+    station2.latest_level = -200
+    result2 = call_relative_water_level(station2)
+    assert result2 == None

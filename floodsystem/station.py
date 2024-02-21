@@ -53,7 +53,7 @@ class MonitoringStation:
             return True
         
     def relative_water_level(self):
-        if self.typical_range_consistent() == False or self.latest_level == None:
+        if self.typical_range_consistent() == False or self.latest_level == None or self.latest_level <0:
             return None
         else:
             range_low = self.typical_range[0]
